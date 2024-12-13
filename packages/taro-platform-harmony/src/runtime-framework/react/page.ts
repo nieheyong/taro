@@ -107,11 +107,9 @@ export function createPageConfig (component: any, pageName?: string, pageConfig?
   }
 
   let loadResolver: (...args: any[]) => void
-  let hasLoaded: Promise<void>
+  let hasLoaded = new Promise(resolve => { loadResolver = resolve })
   const page = {
     [ONLOAD] (options: Readonly<Record<string, unknown>> = {}, cb?: (...args: any[]) => any) {
-      hasLoaded = new Promise(resolve => { loadResolver = resolve })
-
       Current.page = this as any
 
       // this.$taroPath 是页面唯一标识
